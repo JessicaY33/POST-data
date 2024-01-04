@@ -10,5 +10,13 @@ app.use(express.json({ limit: "1mb" })); // this limits the incoming JSON data t
 app.post("/api", (request, response) => {
 console.log(request);
 
+console.log("I got a request");
+console.log(request.body);
 
+const data = request.body;
+response.json({
+  status: 'it works',
+  latitude: data.lat,
+  longitude:data.lon
+});
 });
