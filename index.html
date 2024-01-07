@@ -7,8 +7,34 @@
     <title>Document</title>
 </head>
 <body>
+    <script>
+        if ('geolocation' in navigator) {
+            console.log('geolocation available');
+            navigator.geolocation.getCurrentPosition(async position => {
+              lat = position.coords.latitude;
+              lon = position.coords.longitude;
+              document.getElementById('latitude').textContent = lat;
+              document.getElementById('longitude').textContent = lon;
+         
+              const data = { lat, lon };
+                 const options = {
+                       method: 'POST',
+                       headers: {
+                            'Content-Type': 'application/json'
+              },
+                body: JSON.stringify(data)
+            };
+            const response = await fetch('/api', options);
+            const json = await response.json(); // this will be read as json
+            console.log(json);
+            });
+          } else {
+            console.log('geolocation not available');
+          }
+    </script>
     <h1>Tracking Data Log</h1>
     <p>Latitude: <span id = "latitude"></span>&deg;</p>
     <p>Longitude: <span id = "longitude"></span>&deg;</p>
+    <button id = "submit">submit</button>
 </body>
 </html>
